@@ -13,19 +13,14 @@ LeetCode Algorithm
 
 |  #   |                            Title                             |               Solution                |  Difficulty   |
 | :--: | :----------------------------------------------------------: | :-----------------------------------: | :-----------: |
-|  53  | [最大子数组和](https://leetcode.cn/problems/maximum-subarray/description/) |                                       |     Easy+     |
+|  53  | [最大子数组和](https://leetcode.cn/problems/maximum-subarray/description/) |  [java](./LC/Solutions/java/53.java)  |     Easy+     |
+| 152  | [乘积最大子数组](https://leetcode.cn/problems/maximum-product-subarray/) |  [java](LC/Solutions/java/152.java)   |    Medium+    |
 | 198  |    [打家劫舍](https://leetcode.cn/problems/house-robber/)    |                                       |    Medium-    |
-|      |                                                              |                                       |               |
 | 213  | [打家劫舍 II](https://leetcode.cn/problems/house-robber-ii/) |                                       |    Medium     |
-|      |                                                              |                                       |               |
 | 740  | [删除并获得点数](https://leetcode.cn/problems/delete-and-earn/) | [java](./LC/Solutions/java/740.java)  |    Medium     |
-|      |                                                              |                                       |               |
-|      |                                                              |                                       |               |
-|      |                                                              |                                       |               |
+| 1749 | [任意子数组和的绝对值的最大值](https://leetcode.cn/problems/maximum-absolute-sum-of-any-subarray/) |  [java](LC/Solutions/java/1749.java)  | Medium-(1542) |
 | 2320 | [统计放置房子的方式数](https://leetcode.cn/problems/count-number-of-ways-to-place-houses/) | [java](./LC/Solutions/java/2320.java) | Medium(1608)  |
-|      |                                                              |                                       |               |
 | 3186 | [施咒的最大总伤害](https://leetcode.cn/problems/maximum-total-damage-with-spell-casting/) | [java](./LC/Solutions/java/3186.java) | Medium+(1841) |
-|      |                                                              |                                       |               |
 
 
 
@@ -33,9 +28,9 @@ LeetCode Algorithm
 
 ## 动态规划 Dynamic Programming
 
-### DP 入门
+### 1. DP 入门
 
-#### 打家劫舍
+#### 1.1 打家劫舍
 
 > [!important]
 >
@@ -89,7 +84,7 @@ return f1;
 
 |  #   |                            Title                             |               Solution                |  Difficulty   |
 | :--: | :----------------------------------------------------------: | :-----------------------------------: | :-----------: |
-| 198  |    [打家劫舍](https://leetcode.cn/problems/house-robber/)    |                                       |    Medium-    |
+| 198  |    [打家劫舍](https://leetcode.cn/problems/house-robber/)    |                                       |     Easy+     |
 | 213  | [打家劫舍 II](https://leetcode.cn/problems/house-robber-ii/) |                                       |    Medium     |
 | 2320 | [统计放置房子的方式数](https://leetcode.cn/problems/count-number-of-ways-to-place-houses/) | [java](./LC/Solutions/java/2320.java) | Medium(1608)  |
 | 740  | [删除并获得点数](https://leetcode.cn/problems/delete-and-earn/) | [java](./LC/Solutions/java/740.java)  |    Medium     |
@@ -99,7 +94,7 @@ return f1;
 
 
 
-#### 最大子数组和
+#### 1.2 最大子数组和
 
 
 
@@ -124,10 +119,10 @@ f[0] = nums[0];
 int ans = f[0]; // 枚举记录最大 f [i]
 for (int i = 1; i < n; i++) {
     // 3.状态转移方程
-    f[i] = Math.max(f[i-1], 0) + a[i]; // 以 a [i] 结尾表示必须选择
+    f[i] = Math.max(f[i - 1], 0) + a[i]; // 以 a [i] 结尾表示必须选择
     ans = Math.max(ans, f[i]);
 }
-return ans
+return ans;
 ```
 
 ---
@@ -135,12 +130,33 @@ return ans
 **前缀和思路**
 
 ```java
+// 1.初始化赋值 ans 为 Integer.MIN_VALUE
+int ans = Integer.MIN_VALUE;
+int minPreSum = 0; // 最小前缀和 —— 等价于股票买入点
+int preSum = 0;	   // 当前前缀和 —— 等价于股票售出点
+
+// ➤ preSum - minPreSum 就是连续子数组和
+for (int x : nums) {
+    preSum += x;
+    // 由于本题题目要求 「连续子数组不能为空」
+    // 先计算 preSum - minPreSum 再更新 minPreSum
+    ans = Math.max(ans, preSum - minPreSum);
+    minPreSum = Math.min(minPreSum, preSum);
+}
+return ans;
 ```
 
 ---
 
 
 
-|  #   |                            Title                             | Solution | Difficulty |
-| :--: | :----------------------------------------------------------: | :------: | :--------: |
-|  53  | [最大子数组和](https://leetcode.cn/problems/maximum-subarray/description/) |          |   Easy+    |
+|  #   |                            Title                             |              Solution               |  Difficulty   |
+| :--: | :----------------------------------------------------------: | :---------------------------------: | :-----------: |
+|  53  | [最大子数组和](https://leetcode.cn/problems/maximum-subarray/description/) | [java](./LC/Solutions/java/53.java) |     Easy+     |
+| 2606 | [找到最大开销的子字符串](https://leetcode.cn/problems/find-the-substring-with-maximum-cost/) | [java](LC/Solutions/java/2606.java) | Medium-(1422) |
+| 1749 | [任意子数组和的绝对值的最大值](https://leetcode.cn/problems/maximum-absolute-sum-of-any-subarray/) | [java](LC/Solutions/java/1749.java) | Medium-(1542) |
+| 1191 | [K 次串联后最大子数组之和](https://leetcode.cn/problems/k-concatenation-maximum-sum/description/) | [java](LC/Solutions/java/1191.java) | Medium+(1748) |
+| 152  | [乘积最大子数组](https://leetcode.cn/problems/maximum-product-subarray/) | [java](LC/Solutions/java/152.java)  |    Medium+    |
+
+
+
